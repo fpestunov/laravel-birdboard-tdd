@@ -45,3 +45,20 @@ php artisan make:test ProjectsTest
 
 Разобрался:
 - почему не запускались раньше тесты, без слова `test`, просто добавил комментарий `/** @test */` перед методом;
+
+## 3. Testing Request Validation
+
+We haven't yet written any request validation logic. As before, let's use a TDD approach for specifying each validation requirement.
+
+Начинаем тестировать валидацию данных:
+- добавляем тест `a_project_requires_a_title()`;
+- тестируем только этот метод `vendor/bin/phpunit --filter a_project_requires_a_title`;
+- `alias pf="vendor/bin/phpunit --filter"`;
+- создадим фабрику проектов `php artisan make:factory ProjectFactory --model="App\Project"`
+- проверим работу фабрики:
+```
+php artisan tinker
+factory('App\Project')->make() // возвращает новый объект
+factory('App\Project')->raw() // возвращает новый объект->массив
+factory('App\Project')->create() // создает запись в БД
+```
