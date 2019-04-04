@@ -30,6 +30,18 @@ class ProjectsTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_view_project()
+    {
+        $this->withoutExceptionHandling();
+
+        $project = factory('App\Project')->create();
+
+        $this->get('/projects/' . $project->id)
+            ->assertSee('title');
+            // ->assertSee('description');
+    }
+
+    /** @test */
     public function a_project_requires_a_title()
     {
         $attributes = factory('App\Project')->raw(['title' => '']);

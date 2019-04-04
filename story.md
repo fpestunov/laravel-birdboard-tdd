@@ -62,3 +62,17 @@ factory('App\Project')->make() // возвращает новый объект
 factory('App\Project')->raw() // возвращает новый объект->массив
 factory('App\Project')->create() // создает запись в БД
 ```
+
+## 4. Model Tests
+
+We must next ensure that a user can visit any project page. Though we should start with a feature test, this episode will provide a nice opportunity to pause and drop down a level to a model test.
+
+Задача - реализовать тест - "Пользователь может видеть конкретный проект".
+
+Приступаем:
+- создадим метод `a_project_requires_a_title()`;
+- подключаем `$this->withoutExceptionHandling()`, чтобы не были ошибки HTTP;
+- настраиваем контроллер, добавляем путь в routes и view;
+- почему то не проходит тест description?!;
+
+
