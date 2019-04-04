@@ -40,5 +40,8 @@ php artisan make:test ProjectsTest
 - `php artisan make:model Project`
 - добавляем view;
 
+Начинаем рефакторить:
+- `php artisan make:controller ProjectsController`
+
 Разобрался:
 - почему не запускались раньше тесты, без слова `test`, просто добавил комментарий `/** @test */` перед методом;
