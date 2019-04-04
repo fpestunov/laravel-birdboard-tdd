@@ -20,7 +20,7 @@ Let's begin by reviewing the application that we plan to build. We'll then finis
 My hope is to demonstrate, as much as possible, my actual workflow when writing my own applications. With that in mind, let's begin with our first feature test.
 
 Создаем тест для Projects:
-php artisan make:test ProjectsTest
+`php artisan make:test ProjectsTest`
 
 Пользователь:
 - добавляет проекты (понадобится библиотека `Faker`);
@@ -73,6 +73,22 @@ We must next ensure that a user can visit any project page. Though we should sta
 - создадим метод `a_project_requires_a_title()`;
 - подключаем `$this->withoutExceptionHandling()`, чтобы не были ошибки HTTP;
 - настраиваем контроллер, добавляем путь в routes и view;
-- почему то не проходит тест description?!;
+- почему то не проходит тест description?!, ааа потому что написал `'description'`, а правильно так: `$project->description`;
+
+Начинаем рефакторить:
+- используем data binding в контроллерах;
+- хардкодерные пути - неправильно, добавляем пути в модель;
+- добавим еще один тест `php artisan make:test ProjectTest --unit` (а чем он отличается от обычного? - там мы будем тестировать модели);
+- добавим метод `it_has_a_path()`;
+- добавим в модели метод `path()`;
+- тест работает `vendor/bin/phpunit --filter it_has_a_path`;
+- поменяем путь, там где он захардкоден - в тестах и на главной странице;
+- а как это будет выглядеть в браузере?
+```
+php artisan migrate
+php artisan serve
+```
+- используем Blade директиву @forelse;
+- создадим *Tinker* несколько записей `factory('App\Project', 5)->create()`;
 
 
