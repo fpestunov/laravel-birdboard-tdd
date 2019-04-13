@@ -91,4 +91,17 @@ php artisan serve
 - используем Blade директиву @forelse;
 - создадим *Tinker* несколько записей `factory('App\Project', 5)->create()`;
 
+## 5. A Project Requires An Owner
+
+It's true that we can now create and persist projects to the database, but they aren't currently associated with any user. This isn't practical. To fix this, we'll write a test to confirm that the authenticated user is always assigned as the owner of any new project that is created during their session.
+
+Приступим:
+- создадим тест проверки наличия владельца;
+- добавим в миграцию дополнительное поле;
+- пропишем в миграции связь owner_id с таблицей user и каскадное удаление, при удалении пользователя;
+- `php artisan migrate:refresh` - *какие то непонятные проблемы с миграцией... попробовать создать таблицы в БД напрямую*;
+- добавляем в фабрику и контроллер поле;
+- тест работает `vendor/bin/phpunit --filter 'a_project_requires_an_owner'`.
+
+Приступим к рефакторингу:
 
