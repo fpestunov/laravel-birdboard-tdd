@@ -116,6 +116,15 @@ It's true that we can now create and persist projects to the database, but they 
 - добавляем авторизованного пользователя `$this->actingAs(factory('App\User')->create());`;
 - тест класса работает!
 
+Приступим ко второму этапу валидации:
+- в контроллере сделаем более красивый код для сохраненния проекта;
+- в тестах ошибка!
+- создадим отдельный тест `php artisan make:test UserTest --unit` и напишем тест;
+- добавим метод `projects()` в класс `User`;
+- тест работает `vendor/bin/phpunit --filter 'a_user_has_projects'`;
+- все тесты работают! `vendor/bin/phpunit`
+
 Что сделать?
 - алиасы на запуск теста `pf`;
 - настроить Sublime на запуск тестов из него;
+- как подключать используемые классы? `use ...\...\...`;
