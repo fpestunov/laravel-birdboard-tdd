@@ -128,3 +128,26 @@ It's true that we can now create and persist projects to the database, but they 
 - алиасы на запуск теста `pf`;
 - настроить Sublime на запуск тестов из него;
 - как подключать используемые классы? `use ...\...\...`;
+
+## 6. Scoping Projects
+
+In this episode, we'll continue tweaking which projects are displayed to the user. We'll also begin implementing the appropriate page authorization.
+
+Приступим:
+- сделаем, чтобы список проектов могли видеть авторизованные пользователи;
+- добавим:
+```
+//ProjectsController.php
+public function index()
+{
+    $projects = auth()->user()->projects;
+
+```
+- и в роутах надо добавить `middleware('auth')`;
+- авторизуемся и можно смотреть проекты, но если указать id проекта другого пользователя, то мы ее увидим, не порядок;
+- обновим метод `show()`, работает;
+- пора написать тесты... `guests_cannot_view_projects()` и другие... работает! (потому что в роутах стоит middleware);
+- а остальные тесты перестали работать!, исправляем, работает!;
+- переделаем файл роутов;
+
+
