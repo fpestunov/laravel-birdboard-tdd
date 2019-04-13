@@ -15,6 +15,8 @@ class ProjectsTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        $this->actingAs(factory('App\User')->create());
+
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
@@ -44,6 +46,8 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_title()
     {
+        $this->actingAs(factory('App\User')->create());
+
         $attributes = factory('App\Project')->raw(['title' => '']);
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('title');
@@ -52,6 +56,8 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_description()
     {
+        $this->actingAs(factory('App\User')->create());
+
         $attributes = factory('App\Project')->raw(['description' => '']);
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('description');
@@ -64,6 +70,8 @@ class ProjectsTest extends TestCase
 
         $attributes = factory('App\Project')->raw(['owner_id' => null]);
 
-        $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
+        // $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
+        $this->post('/projects', $attributes)->assertRedirect('login');
+
     }
 }
