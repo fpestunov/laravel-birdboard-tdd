@@ -11,6 +11,25 @@ class ProjectsTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
+    public function it_has_a_path()
+    {
+        $project = factory('App\Project')->create();
+        $this->assertEquals('/projects/' . $project->id, $project->path());
+    }
+
+    /** @test */
+    public function a_user_can_view_project()
+    {
+        $this->withoutExceptionHandling();
+
+        $project = factory('App\Project')->create();
+
+        $this->get('/projects/' . $project->id)
+            ->assertSee($project->title)
+            ->assertSee($project->description);
+    }
+
+    /** @test */
     public function a_user_can_create_a_project()
     {
         $this->withoutExceptionHandling();
@@ -23,7 +42,7 @@ class ProjectsTest extends TestCase
         $this->post('/projects', $attributes)->assertRedirect('/projects');
 
         $this->assertDatabaseHas('projects', $attributes);
-        
+
         $this->get('/projects')->assertSee($attributes['title']);
 
         // $response->assertStatus(200);
@@ -44,4 +63,13 @@ class ProjectsTest extends TestCase
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
+
+    /** @test */
+    public function a_project_requires_an_owner()
+    {
+        $attributes = factory('App\Project')->raw(['owner_id' => null]);
+
+        $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
+    }
 }
+
